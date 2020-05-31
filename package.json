@@ -1,0 +1,36 @@
+{
+  "name": "secrets-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon server.js",
+    "start": "node server.js",
+    "lint": "standard --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "lerna": "^3.22.0",
+    "nodemon": "^2.0.4",
+    "standard": "^14.3.4"
+  },
+  "dependencies": {
+    "fastify": "^2.14.1",
+    "@plugins/authentication": "file:plugins/authentication",
+    "@routes/secrets": "file:routes/secrets",
+    "@routes/users": "file:routes/users",
+    "@secrets/auth": "file:packages/secrets-auth",
+    "@secrets/crypto": "file:packages/secrets-crypto",
+    "@secrets/db": "file:packages/secrets-db",
+    "@secrets/services": "file:packages/secrets-services",
+    "pino-pretty": "^4.0.0"
+  },
+  "standard": {
+    "ignore": [
+      "**/node_modules/**"
+    ]
+  }
+}
