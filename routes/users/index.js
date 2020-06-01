@@ -51,6 +51,21 @@ async function userRoutes (fastify, options) {
         reply.code(201)
         return createdUser
     })
+    .put('/users', {
+        preValidation: fastify.auth([fastify.validateJWT]),
+    }, async (request, reply) => {
+        const {user} = request.user
+        const { username, oldPassword, newPassword } = request.body
+        if(username != user){
+            reply.code(401)
+            return new Error('Unauthorized')
+        }
+        await userServices.changePassword(username, oldPassword, newPassword) //Change pass
+
+        return {
+            status: 'Process'
+        }
+    })
 
     
 }

@@ -1,5 +1,5 @@
 'use strict'
-const { authenticate } = require('@secrets/auth')
+const { authenticate, isAuthenticated } = require('@secrets/auth')
 const fp = require('fastify-plugin')
 async function authentication (fastify, options) {
     fastify
@@ -10,6 +10,12 @@ async function authentication (fastify, options) {
     .decorate('validateJWT', async (request, reply) => {
         try {
             await request.jwtVerify()
+            const {user} = request.user
+            console.log(user)
+            if(!await isAuthenticated(user)){
+                reply.code(401).send(new Error('Unauthorized'))
+            }
+            
         } catch (err) {
             reply.send(err)
         }

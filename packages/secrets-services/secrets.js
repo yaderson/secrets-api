@@ -67,10 +67,30 @@ function deleteSecret (username, name) {
   })
 }
 
+async function updateAllSecrets(username, oldRandomKey, newRandomKey, newSecretKey) {
+  try{
+    const secrets = await db.secrets.findAndCountAll({where: { username }})
+    const oldSecretKey = await getSecretkey(username)
+    console.log(oldSecretKey)
+    for(secret of secrets.rows){//For all secrets
+      const value = decrypt(String(secret.value), oldSecretKey, oldRandomKey) //Decrypt secret
+      secret.value = encrypt(String(value), newSecretKey, newRandomKey)//Encrypt secret previusly decrypted
+      secret.save()//Save encrypted
+    }
+
+    const redisClient = db.createRedisClient()
+    await redisClient.del(username)
+    redisClient.disconnect()
+    
+  } catch (err){
+    console.log(err)
+  }
+}
 module.exports = {
   createSecret,
   listSecrets,
   getSecret,
   updateSecret,
-  deleteSecret
+  deleteSecret,
+  updateAllSecrets
 }

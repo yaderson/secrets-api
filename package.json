@@ -18,7 +18,6 @@
     "standard": "^14.3.4"
   },
   "dependencies": {
-    "fastify": "^2.14.1",
     "@plugins/authentication": "file:plugins/authentication",
     "@routes/secrets": "file:routes/secrets",
     "@routes/users": "file:routes/users",
@@ -26,6 +25,8 @@
     "@secrets/crypto": "file:packages/secrets-crypto",
     "@secrets/db": "file:packages/secrets-db",
     "@secrets/services": "file:packages/secrets-services",
+    "fastify": "^2.14.1",
+    "fastify-helmet": "^3.0.2",
     "pino-pretty": "^4.0.0"
   },
   "standard": {

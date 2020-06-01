@@ -9,6 +9,7 @@ const fastify = require('fastify')({
 const port = process.env.PORT || 8080
 
 fastify
+    .register(require('fastify-helmet'))
     .register(require('@plugins/authentication'))
     .after(() => {
         fastify
